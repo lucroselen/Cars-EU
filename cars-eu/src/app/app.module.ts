@@ -8,9 +8,14 @@ import { HeaderComponent } from './header/header.component';
 import { HomepageComponent } from './homepage/homepage.component';
 
 @NgModule({
-  declarations: [AppComponent, FooterComponent, HeaderComponent, HomepageComponent],
+  declarations: [
+    AppComponent,
+    FooterComponent,
+    HeaderComponent,
+    HomepageComponent,
+  ],
   imports: [BrowserModule, AppRoutingModule],
   providers: [],
-  bootstrap: [AppComponent, FooterComponent, HeaderComponent],
+  bootstrap: [AppComponent],
 })
 export class AppModule {}
