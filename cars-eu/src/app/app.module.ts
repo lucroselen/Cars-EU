@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
 import { HomepageComponent } from './homepage/homepage.component';
+import { MapsComponent } from './maps/maps.component';
 
 @NgModule({
   declarations: [
@@ -13,6 +14,7 @@ import { HomepageComponent } from './homepage/homepage.component';
     FooterComponent,
     HeaderComponent,
     HomepageComponent,
+    MapsComponent,
   ],
   imports: [BrowserModule, AppRoutingModule],
   providers: [],

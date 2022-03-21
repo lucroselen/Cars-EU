@@ -1,0 +1,6 @@
+.full {
+  width: 100vw;
+  height: calc(100vh - (53px + 38px));
+  margin-top: 53px;
+  margin-bottom: 38px;
+}
