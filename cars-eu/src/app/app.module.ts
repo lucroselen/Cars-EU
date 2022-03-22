@@ -7,6 +7,7 @@ import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { MapsComponent } from './maps/maps.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { MapsComponent } from './maps/maps.component';
     HeaderComponent,
     HomepageComponent,
     MapsComponent,
+    NotFoundComponent,
   ],
   imports: [BrowserModule, AppRoutingModule],
   providers: [],
