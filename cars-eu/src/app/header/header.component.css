@@ -10,16 +10,22 @@ header {
   background: #212529da;
 }
 header nav ul li a,
-header a {
+header a,
+.welcome span {
   text-decoration: none;
   color: hsla(0, 0%, 100%, 0.815);
+}
+
+.welcome a {
+  font-weight: bold;
 }
 
 header nav ul li {
   list-style: none;
 }
 
-header nav ul li a:hover {
+header nav ul li a:hover,
+.welcome a:hover {
   color: #fff;
   border-bottom: 1px solid #fff;
   padding-bottom: 8px;
@@ -33,7 +39,7 @@ header nav ul {
 
 .navbar-brand {
   color: #fff;
-  font-size: 26px;
-  font-weight: 400;
-  letter-spacing: 1px;
+  font-size: 28px;
+  font-weight: 500;
+  letter-spacing: 3px;
 }
