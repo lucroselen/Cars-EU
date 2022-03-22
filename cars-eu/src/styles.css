@@ -13,12 +13,11 @@ body {
   -moz-osx-font-smoothing: grayscale;
 
   background: linear-gradient(
-    to left top,
-    #000000,
-    #2c2330,
-    #344865,
-    #00768f,
-    #01a496
+    to left,
+    #2d2d70,
+    #47334e,
+    #3e577a,
+    #056b80,
+    #068f83
   );
-  background-repeat: no-repeat;
 }
