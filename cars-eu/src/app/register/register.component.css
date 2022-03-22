@@ -1,5 +1,7 @@
 .registerContainer {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: relative;
   width: 100vw;
   height: calc(100vh - (53px + 38px));
@@ -34,14 +36,10 @@
   padding: 1rem;
   width: 450px;
   min-width: 200px;
-  min-height: 660px;
+  min-height: 620px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  position: absolute;
-  top: 424px;
-  left: 50%;
-  transform: translate(-50%, -50%);
 }
 
 .registerText {
