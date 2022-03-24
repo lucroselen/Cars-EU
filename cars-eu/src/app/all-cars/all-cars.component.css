@@ -50,10 +50,6 @@
   margin: 0.25rem 0;
 }
 
-.carText p {
-  word-break: break-all;
-}
-
 .card button {
   position: absolute;
   font-family: Arial, Helvetica, sans-serif;
