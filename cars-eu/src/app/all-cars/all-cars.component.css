@@ -69,4 +69,5 @@
 .card button:hover {
   background: rgb(31, 135, 45);
   color: #fff;
+  cursor: pointer;
 }
