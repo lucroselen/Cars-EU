@@ -110,3 +110,7 @@ strong {
 .fix-margin {
   margin-top: 6rem;
 }
+
+img {
+  object-fit: cover;
+}
