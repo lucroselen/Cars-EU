@@ -5,11 +5,8 @@ import { AllCarsComponent } from './all-cars/all-cars.component';
 import { CarDetailsComponent } from './car-details/car-details.component';
 import { EditCarComponent } from './edit-car/edit-car.component';
 import { HomepageComponent } from './homepage/homepage.component';
-import { LoginComponent } from './login/login.component';
 import { MapsComponent } from './maps/maps.component';
 import { NotFoundComponent } from './not-found/not-found.component';
-import { ProfileComponent } from './profile/profile.component';
-import { RegisterComponent } from './register/register.component';
 
 const routes: Routes = [
   {
@@ -22,12 +19,8 @@ const routes: Routes = [
     component: MapsComponent,
   },
   {
-    path: 'login',
-    component: LoginComponent,
-  },
-  {
-    path: 'register',
-    component: RegisterComponent,
+    path: 'user',
+    loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
   },
   {
     path: 'all-cars',
@@ -37,10 +30,7 @@ const routes: Routes = [
     path: 'details',
     component: CarDetailsComponent,
   },
-  {
-    path: 'profile',
-    component: ProfileComponent,
-  },
+
   {
     path: 'add',
     component: AddCarComponent,
@@ -55,8 +45,4 @@ const routes: Routes = [
   },
 ];
 
-@NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule],
-})
-export class AppRoutingModule {}
+export const AppRoutingModule = RouterModule.forRoot(routes);
