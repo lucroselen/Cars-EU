@@ -21,14 +21,15 @@ export class AuthService {
 
   constructor(private httpClient: HttpClient) {}
 
-  // login$(userData: { email: string; password: string }): Observable<IUser> {
-  //   return this.httpClient
-  //     .post<IUser>(`${environment.apiUrl}/login`, userData, {
-  //       withCredentials: true,
-  //       observe: 'response',
-  //     })
-  //     .pipe(map((response) => response.body));
-  // }
+  login$(userData: { email: string; password: string }): Observable<IUser> {
+    return this.httpClient.post<IUser>(
+      `${environment.apiUrl}/users/login`,
+      userData,
+      {
+        withCredentials: true,
+      }
+    );
+  }
 
   // logout$(): Observable<void> {
   //   return this.httpClient.post<void>(
