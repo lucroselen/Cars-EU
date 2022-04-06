@@ -61,7 +61,7 @@ router.post("/register", isAlreadyLogged, async (req, res) => {
     res.status(401).json({ error: errorHandler(error) });
   }
 });
-router.get("/logout", isAuth, (req, res) => {
+router.post("/logout", isAuth, (req, res) => {
   try {
     res.clearCookie(TOKEN_COOKIE_NAME, { path: "/", domain: "localhost" });
     res.json("You have logged out successfully");

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -7,7 +8,29 @@ import { Router } from '@angular/router';
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit {
-  constructor(private router: Router) {}
+  private isLoggingOut: boolean = false;
+  constructor(public authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {}
+
+  logoutHandler(): void {
+    if (this.isLoggingOut) {
+      return;
+    }
+
+    this.isLoggingOut = true;
+
+    this.authService.logout$().subscribe({
+      next: (args) => {
+        console.log(args);
+      },
+      complete: () => {
+        this.isLoggingOut = false;
+        this.router.navigate(['/']);
+      },
+      error: () => {
+        this.isLoggingOut = false;
+      },
+    });
+  }
 }

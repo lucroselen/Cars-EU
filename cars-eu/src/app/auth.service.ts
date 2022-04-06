@@ -31,13 +31,13 @@ export class AuthService {
     );
   }
 
-  // logout$(): Observable<void> {
-  //   return this.httpClient.post<void>(
-  //     `${environment.apiUrl}/logout`,
-  //     {},
-  //     { withCredentials: true }
-  //   );
-  // }
+  logout$(): Observable<void> {
+    return this.httpClient.post<void>(
+      `${environment.apiUrl}/users/logout`,
+      {},
+      { withCredentials: true }
+    );
+  }
 
   register$(userData: IUser): Observable<IUser> {
     return this.httpClient.post<IUser>(
