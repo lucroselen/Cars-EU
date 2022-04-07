@@ -48,7 +48,7 @@ const userSchema = new mongoose.Schema({
   favorites: [
     {
       type: mongoose.Types.ObjectId,
-      ref: "Book",
+      ref: "Car",
     },
   ],
 });
