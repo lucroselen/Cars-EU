@@ -6,7 +6,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -24,27 +24,22 @@ export class LoginComponent implements OnInit {
       Validators.minLength(5),
     ]),
   });
-
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
-    private activatedRoute: ActivatedRoute,
     private router: Router
   ) {}
 
   ngOnInit(): void {}
 
   handleLogin(): void {
-    console.log(this.loginFormGroup);
     this.authService.login$(this.loginFormGroup.value).subscribe({
-      next: () => {
-        if (this.activatedRoute.snapshot.queryParams['redirect-to']) {
-          this.router.navigateByUrl(
-            this.activatedRoute.snapshot.queryParams['redirect-to']
-          );
-        } else {
-          this.router.navigate(['/']);
-        }
+      next: (e: any) => {
+        localStorage.setItem('id', e.id);
+        this.authService.authenticate().subscribe();
+      },
+      complete: () => {
+        this.router.navigate(['/']);
       },
     });
   }

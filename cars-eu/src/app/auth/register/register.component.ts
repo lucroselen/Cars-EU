@@ -47,14 +47,21 @@ export class RegisterComponent implements OnInit {
       this.registerFormGroup.value;
 
     const body: IUser = {
+      id: '',
       firstName,
       lastName,
       email,
       password,
       rePassword,
     };
-    this.authService.register$(body).subscribe(() => {
-      this.router.navigate(['/']);
+    this.authService.register$(body).subscribe({
+      next: (e: any) => {
+        localStorage.setItem('id', e.id);
+        this.authService.authenticate().subscribe();
+      },
+      complete: () => {
+        this.router.navigate(['/']);
+      },
     });
   }
 }
