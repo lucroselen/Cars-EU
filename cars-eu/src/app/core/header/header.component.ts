@@ -32,7 +32,7 @@ export class HeaderComponent implements OnInit {
     this.authService.logout$().subscribe({
       complete: () => {
         this.isLoggingOut = false;
-        this.router.navigate(['/']);
+        this.router.navigate(['/user/login']);
         this.authService.handleLogout();
         localStorage.removeItem('id');
       },
