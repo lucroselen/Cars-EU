@@ -62,7 +62,11 @@ export class AuthService {
   }
 
   handleLogin(newUser: any) {
-    let data = { firstName: newUser.firstName, lastName: newUser.lastName };
+    let data = {
+      firstName: newUser.firstName,
+      lastName: newUser.lastName,
+      favorites: newUser.favorites,
+    };
     this._currentUser.next(data);
   }
 
