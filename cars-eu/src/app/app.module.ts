@@ -16,6 +16,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { CoreModule } from './core/core.module';
 import { AuthService } from './auth.service';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { AuthService } from './auth.service';
     HttpClientModule,
     RouterModule,
     CoreModule.forRoot(),
+    ReactiveFormsModule,
   ],
   providers: [
     {

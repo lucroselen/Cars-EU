@@ -1,4 +1,12 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+import { Router } from '@angular/router';
+import { CarService } from '../car.service';
 
 @Component({
   encapsulation: ViewEncapsulation.ShadowDom,
@@ -7,7 +15,58 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
   styleUrls: ['./add-car.component.css'],
 })
 export class AddCarComponent implements OnInit {
-  constructor() {}
+  addFormGroup: FormGroup = this.formBuilder.group({
+    brand: new FormControl(null, [Validators.required]),
+    model: new FormControl(null, [Validators.required]),
+    imgUrl: new FormControl(null, [
+      Validators.required,
+      Validators.minLength(5),
+    ]),
+    fuelType: new FormControl(null, [
+      Validators.required,
+      Validators.minLength(3),
+    ]),
+    year: new FormControl(null, [Validators.required, Validators.minLength(4)]),
+    description: new FormControl(null, [
+      Validators.required,
+      Validators.minLength(10),
+    ]),
+    mileage: new FormControl(null, [Validators.required]),
+    price: new FormControl(null, [Validators.required]),
+  });
+  constructor(
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private carService: CarService
+  ) {}
 
   ngOnInit(): void {}
+  handleAdd(): void {
+    const {
+      brand,
+      model,
+      imgUrl,
+      fuelType,
+      year,
+      description,
+      mileage,
+      price,
+    } = this.addFormGroup.value;
+
+    const body: object = {
+      brand,
+      model,
+      imgUrl,
+      fuelType,
+      year,
+      description,
+      mileage,
+      price,
+    };
+    this.carService.add$(body).subscribe({
+      next: () => {
+        this.router.navigate(['/all-cars']);
+      },
+    });
+  }
 }
