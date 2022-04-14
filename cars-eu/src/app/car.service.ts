@@ -25,4 +25,10 @@ export class CarService {
       withCredentials: true,
     });
   }
+
+  getOne$(id: string): Observable<object> {
+    return this.http.get(`${environment.apiUrl}/details/${id}`, {
+      withCredentials: true,
+    });
+  }
 }
