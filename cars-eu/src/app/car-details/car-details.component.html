@@ -1,5 +1,5 @@
 <div>
-  <div class="container">
+  <div class="container" *ngIf="car; else elseBlock">
     <div class="row">
       <div class="col-md-5">
         <div class="project-info-box mt-0">
@@ -7,49 +7,51 @@
             <b>Car Details</b>
           </h5>
           <p class="mb-0">
-            Колата е в перфектно състояние. Качваш се, палиш и да те нема. Не
-            искам да слушам глупости.
+            {{ car["description"] }}
           </p>
         </div>
         <div class="project-info-box">
           <p>
-            <b>Brand: Opel</b>
+            <b>Brand: {{ car["brand"] }}</b>
           </p>
           <p>
-            <b>Model: Astra</b>
+            <b>Model: {{ car["model"] }}</b>
           </p>
           <p>
-            <b>Year: 2022</b>
+            <b>Year: {{ car["year"] }}</b>
           </p>
           <p>
-            <b>Fuel Type: Gas</b>
+            <b>Fuel Type: {{ car["fuelType"] }}</b>
           </p>
           <p>
-            <b>Mileage: 3000 KM</b>
+            <b>Mileage: {{ car["mileage"] }} KM</b>
           </p>
           <p>
-            <b>Added by: Martin Iliev (Ask for a deal)</b>
+            <b
+              >Added by: {{ car["creator"]["firstName"] }}
+              {{ car["creator"]["lastName"] }} (contact for a deal)</b
+            >
           </p>
           <p>
-            <b>Price: 30000 BGN</b>
+            <b>Price: {{ car["price"] }} BGN</b>
           </p>
           <p>
-            <b>Current car rating: 10</b>
+            <b>Current car rating: {{ car["rating"] }}</b>
             <b> </b>
           </p>
         </div>
-        <div class="project-info-box mybuttons">
+        <div class="project-info-box mybuttons" *ngIf="voted">
           <h2>Thank you for voting on this car!</h2>
         </div>
-        <div class="project-info-box mybuttons">
+        <div *ngIf="isOwnedBy" class="project-info-box mybuttons">
           <a class="btn btn-dark" routerLink="#"> Edit </a>
           <a class="btn btn-danger" routerLink="#"> Delete </a>
         </div>
-        <div class="project-info-box mybuttons">
+        <div *ngIf="!isOwnedBy && isLogged" class="project-info-box mybuttons">
           <button class="btn btn-success" mode="up">Like</button>
           <button class="btn btn-warning" mode="down">Dislike</button>
         </div>
-        <div class="project-info-box mybuttons">
+        <div *ngIf="!isLogged" class="project-info-box mybuttons">
           <p>
             <b>
               <a routerLink="/user/login">Log-in</a>or<a
@@ -59,18 +61,21 @@
             </b>
           </p>
         </div>
-        <div class="project-info-box mybuttons">
+        <div
+          *ngIf="!isInFavorites && isLogged"
+          class="project-info-box mybuttons"
+        >
           <button class="btn btn-primary">Add to Favorites</button>
         </div>
-        <div class="project-info-box mybuttons">
+        <div *ngIf="isInFavorites" class="project-info-box mybuttons">
           <h2>This car has been added to your favorites!</h2>
         </div>
       </div>
       <div class="col-md-7">
         <img
-          src="https://automedia.investor.bg/media/files/resized/uploadedfiles/640x0/714/7d587534c45a43fefae2ef58934a8714-05-2.jpg"
+          src="{{ car['imgUrl'] }}"
           alt="project-pic"
-          height="36.9%"
+          height="60.6%"
           width="100%"
           class="rounded details-img"
         />
@@ -93,12 +98,16 @@
           </form>
         </div>
         <div class="project-info-box fix-margin">
-          <p>
+          <p *ngIf="car['comments'].length > 0">
             <strong></strong>
           </p>
-          <p class="h4">Be the first to comment this car!</p>
+          <p class="h4" *ngIf="car['comments'].length == 0">
+            Be the first to comment this car!
+          </p>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<ng-template #elseBlock>LOADING...</ng-template>
