@@ -43,7 +43,7 @@ export class AuthService {
     );
   }
 
-  authenticate(): Observable<any> {
+  authenticate(): Observable<object> {
     return this.httpClient
       .get(
         `${environment.apiUrl}/users/profile/${localStorage.getItem('id')}`,

@@ -1,19 +1,20 @@
 <div class="carContainer">
-  <div class="card">
+  <div class="card" *ngFor="let car of cars">
     <div class="carText">
-      <h3>Opel Astra</h3>
-      <span><b>2018, Diesel, 20200 KM, 30000 BGN</b></span>
+      <h3>{{ car["brand"] }} {{ car["model"] }}</h3>
+      <span
+        ><b
+          >{{ car["year"] }}, {{ car["fuelType"] }}, {{ car["mileage"] }} KM,
+          {{ car["price"] }} BGN</b
+        ></span
+      >
       <p>
-        Колата е в перфектно състояние. Качваш се, палиш и да те нема. Не искам
-        да слушам глупости.
+        {{ car["description"] }}
       </p>
       <a routerLink="/details">Details</a>
     </div>
     <div class="carImage">
-      <img
-        src="https://automedia.investor.bg/media/files/resized/uploadedfiles/640x0/714/7d587534c45a43fefae2ef58934a8714-05-2.jpg"
-        alt=""
-      />
+      <img src="{{ car['imgUrl'] }}" alt="" />
     </div>
   </div>
 </div>

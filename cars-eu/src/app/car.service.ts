@@ -13,4 +13,10 @@ export class CarService {
       withCredentials: true,
     });
   }
+
+  allCars$(): Observable<object> {
+    return this.http.get(`${environment.apiUrl}/all-cars`, {
+      withCredentials: true,
+    });
+  }
 }
