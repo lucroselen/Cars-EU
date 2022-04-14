@@ -11,7 +11,7 @@
       <p>
         {{ car["description"] | trim }}
       </p>
-      <a routerLink="/details">Details</a>
+      <a [routerLink]="['/details/', car['_id']]">Details</a>
     </div>
     <div class="carImage">
       <img src="{{ car['imgUrl'] }}" alt="" />
