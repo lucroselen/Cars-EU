@@ -83,6 +83,7 @@ router.post("/edit/:id", isAuth, async (req, res) => {
   try {
     if (creator?._id.toString() === req.user?._id) {
       await carServices.edit(
+        carId,
         brand,
         model,
         description,
@@ -105,13 +106,14 @@ router.get("/details/:id", async (req, res) => {
   try {
     let car = await carServices.getOne(req.params.id);
     let user = await User.findById(req.user?._id);
-    let voted = car.votes.find((x) => x._id.toString() === req.user?._id);
-    let isOwnedBy = car.creator._id.toString() === req.user?._id;
-    let isInFavorites = user?.favorites.find(
-      (x) => car._id.toString() === x.toString()
-    );
+    let voted =
+      car.votes.find((x) => x._id.toString() === req.user?._id) || false;
+    let isOwnedBy = car.creator._id.toString() === req.user?._id || false;
+    let isInFavorites =
+      user?.favorites.find((x) => car._id.toString() === x.toString()) || false;
     res.json({ car, voted, isOwnedBy, isInFavorites });
   } catch (error) {
+    console.log(error);
     res.json({ error: errorHandler(error) });
   }
 });
