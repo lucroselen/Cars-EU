@@ -42,6 +42,7 @@ export class AddCarComponent implements OnInit {
 
   ngOnInit(): void {}
   handleAdd(): void {
+    let creator = localStorage.getItem('id');
     const {
       brand,
       model,
@@ -62,6 +63,7 @@ export class AddCarComponent implements OnInit {
       description,
       mileage,
       price,
+      creator,
     };
     this.carService.add$(body).subscribe({
       next: () => {
