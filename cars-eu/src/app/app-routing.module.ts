@@ -32,7 +32,7 @@ const routes: Routes = [
     component: Top10Component,
   },
   {
-    path: 'details',
+    path: 'details/:id',
     component: CarDetailsComponent,
   },
 
