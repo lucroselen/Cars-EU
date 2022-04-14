@@ -17,6 +17,7 @@ import { RouterModule } from '@angular/router';
 import { CoreModule } from './core/core.module';
 import { AuthService } from './auth.service';
 import { ReactiveFormsModule } from '@angular/forms';
+import { Top10Component } from './top-10/top-10.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     EditCarComponent,
     AllCarsComponent,
     CarDetailsComponent,
+    Top10Component,
   ],
   imports: [
     BrowserModule,

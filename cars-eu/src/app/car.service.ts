@@ -19,4 +19,10 @@ export class CarService {
       withCredentials: true,
     });
   }
+
+  top10Cars$(): Observable<object> {
+    return this.http.get(`${environment.apiUrl}/top-10`, {
+      withCredentials: true,
+    });
+  }
 }

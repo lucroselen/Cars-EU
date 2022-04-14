@@ -1,0 +1,20 @@
+<div class="carContainer">
+  <div class="card" *ngFor="let car of cars">
+    <div class="carText">
+      <h3>{{ car["brand"] }} {{ car["model"] }}</h3>
+      <span
+        ><b
+          >{{ car["year"] }}, {{ car["fuelType"] }}, {{ car["mileage"] }} KM,
+          {{ car["price"] }} BGN</b
+        ></span
+      >
+      <p>
+        {{ car["description"] }}
+      </p>
+      <a routerLink="/details">Details</a>
+    </div>
+    <div class="carImage">
+      <img src="{{ car['imgUrl'] }}" alt="" />
+    </div>
+  </div>
+</div>
