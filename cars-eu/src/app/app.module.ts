@@ -18,6 +18,7 @@ import { CoreModule } from './core/core.module';
 import { AuthService } from './auth.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Top10Component } from './top-10/top-10.component';
+import { TrimPipe } from './trim.pipe';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { Top10Component } from './top-10/top-10.component';
     AllCarsComponent,
     CarDetailsComponent,
     Top10Component,
+    TrimPipe,
   ],
   imports: [
     BrowserModule,
