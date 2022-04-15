@@ -45,7 +45,8 @@ import { TrimPipe } from './trim.pipe';
     {
       provide: APP_INITIALIZER,
       useFactory: (authService: AuthService) => {
-        return () => authService.authenticate();
+        return () =>
+          localStorage.getItem('id') ? authService.authenticate() : null;
       },
       deps: [AuthService],
       multi: true,
