@@ -39,7 +39,7 @@ const routes: Routes = [
     component: AddCarComponent,
   },
   {
-    path: 'edit',
+    path: 'edit/:id',
     component: EditCarComponent,
   },
   {
