@@ -44,7 +44,9 @@
           <h2>Thank you for voting on this car!</h2>
         </div>
         <div *ngIf="isOwnedBy" class="project-info-box mybuttons">
-          <a class="btn btn-dark" routerLink="#"> Edit </a>
+          <a class="btn btn-dark" [routerLink]="['../../edit', car['_id']]">
+            Edit
+          </a>
           <a class="btn btn-danger" (click)="handleDelete()"> Delete </a>
         </div>
         <div
