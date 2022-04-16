@@ -1,4 +1,3 @@
-import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AddCarComponent } from './add-car/add-car.component';
 import { AllCarsComponent } from './all-cars/all-cars.component';
@@ -35,7 +34,6 @@ const routes: Routes = [
     path: 'details/:id',
     component: CarDetailsComponent,
   },
-
   {
     path: 'add',
     component: AddCarComponent,
@@ -45,8 +43,12 @@ const routes: Routes = [
     component: EditCarComponent,
   },
   {
-    path: '**',
+    path: '404',
     component: NotFoundComponent,
+  },
+  {
+    path: '**',
+    redirectTo: '404',
   },
 ];
 
