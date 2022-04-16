@@ -67,10 +67,12 @@
           </p>
         </div>
         <div
-          *ngIf="!isInFavorites && isLogged"
+          *ngIf="!isInFavorites && isLogged && !isOwnedBy"
           class="project-info-box mybuttons"
         >
-          <button class="btn btn-primary">Add to Favorites</button>
+          <button class="btn btn-primary" (click)="handleFavorite()">
+            Add to Favorites
+          </button>
         </div>
         <div *ngIf="isInFavorites" class="project-info-box mybuttons">
           <h2>This car has been added to your favorites!</h2>

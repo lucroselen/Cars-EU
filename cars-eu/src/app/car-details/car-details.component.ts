@@ -23,6 +23,12 @@ export class CarDetailsComponent implements OnInit {
     this.isLogged = localStorage.getItem('id');
     this.id = this.route.snapshot.params['id'];
   }
+  proceed(): void {
+    let currentUrl = this.router.url;
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.onSameUrlNavigation = 'reload';
+    this.router.navigate([currentUrl]);
+  }
 
   ngOnInit(): void {
     this.carService.getOne$(this.id).subscribe((e) => {
@@ -53,10 +59,7 @@ export class CarDetailsComponent implements OnInit {
         this.router.navigate(['/404']);
         return;
       }
-      let currentUrl = this.router.url;
-      this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-      this.router.onSameUrlNavigation = 'reload';
-      this.router.navigate([currentUrl]);
+      this.proceed();
     });
   }
 
@@ -66,10 +69,17 @@ export class CarDetailsComponent implements OnInit {
         this.router.navigate(['/404']);
         return;
       }
-      let currentUrl = this.router.url;
-      this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-      this.router.onSameUrlNavigation = 'reload';
-      this.router.navigate([currentUrl]);
+      this.proceed();
+    });
+  }
+
+  handleFavorite(): void {
+    this.carService.favorite$(this.id).subscribe((e) => {
+      if (!!e['error']) {
+        this.router.navigate(['/404']);
+        return;
+      }
+      this.proceed();
     });
   }
 }

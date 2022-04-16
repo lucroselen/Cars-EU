@@ -49,4 +49,10 @@ export class CarService {
       withCredentials: true,
     });
   }
+
+  favorite$(id: string): Observable<object> {
+    return this.http.get(`${environment.apiUrl}/favorite/${id}`, {
+      withCredentials: true,
+    });
+  }
 }
