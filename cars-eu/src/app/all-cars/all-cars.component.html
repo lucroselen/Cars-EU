@@ -1,20 +1,25 @@
 <div class="carContainer">
-  <div class="card" *ngFor="let car of cars">
-    <div class="carText">
-      <h3>{{ car["brand"] }} {{ car["model"] }}</h3>
-      <span
-        ><b
-          >{{ car["year"] }}, {{ car["fuelType"] }}, {{ car["mileage"] }} KM,
-          {{ car["price"] }} BGN</b
-        ></span
-      >
-      <p>
-        {{ car["description"] | trim }}
-      </p>
-      <a [routerLink]="['/details/', car['_id']]">Details</a>
-    </div>
-    <div class="carImage">
-      <img src="{{ car['imgUrl'] }}" alt="" />
-    </div>
+  <div *ngIf="cars.length == 0; else elseBlock">
+    <h1>There are no cars in the database!</h1>
   </div>
+  <ng-template #elseBlock>
+    <div class="card" *ngFor="let car of cars">
+      <div class="carText">
+        <h3>{{ car["brand"] }} {{ car["model"] }}</h3>
+        <span
+          ><b
+            >{{ car["year"] }}, {{ car["fuelType"] }}, {{ car["mileage"] }} KM,
+            {{ car["price"] }} BGN</b
+          ></span
+        >
+        <p>
+          {{ car["description"] | trim }}
+        </p>
+        <a [routerLink]="['/details/', car['_id']]">Details</a>
+      </div>
+      <div class="carImage">
+        <img src="{{ car['imgUrl'] }}" alt="" />
+      </div>
+    </div>
+  </ng-template>
 </div>
