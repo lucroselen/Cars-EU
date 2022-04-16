@@ -47,9 +47,14 @@
           <a class="btn btn-dark" routerLink="#"> Edit </a>
           <a class="btn btn-danger" (click)="handleDelete()"> Delete </a>
         </div>
-        <div *ngIf="!isOwnedBy && isLogged" class="project-info-box mybuttons">
-          <button class="btn btn-success" mode="up">Like</button>
-          <button class="btn btn-warning" mode="down">Dislike</button>
+        <div
+          *ngIf="!isOwnedBy && isLogged && !voted"
+          class="project-info-box mybuttons"
+        >
+          <button class="btn btn-success" (click)="handleLike()">Like</button>
+          <button class="btn btn-warning" (click)="handleDislike()">
+            Dislike
+          </button>
         </div>
         <div *ngIf="!isLogged" class="project-info-box mybuttons">
           <p>

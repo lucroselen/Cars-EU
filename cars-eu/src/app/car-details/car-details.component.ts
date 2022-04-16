@@ -46,4 +46,30 @@ export class CarDetailsComponent implements OnInit {
       this.router.navigate(['/all-cars']);
     });
   }
+
+  handleLike(): void {
+    this.carService.voteUp$(this.id).subscribe((e) => {
+      if (!!e['error']) {
+        this.router.navigate(['/404']);
+        return;
+      }
+      let currentUrl = this.router.url;
+      this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+      this.router.onSameUrlNavigation = 'reload';
+      this.router.navigate([currentUrl]);
+    });
+  }
+
+  handleDislike(): void {
+    this.carService.voteDown$(this.id).subscribe((e) => {
+      if (!!e['error']) {
+        this.router.navigate(['/404']);
+        return;
+      }
+      let currentUrl = this.router.url;
+      this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+      this.router.onSameUrlNavigation = 'reload';
+      this.router.navigate([currentUrl]);
+    });
+  }
 }

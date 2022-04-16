@@ -37,4 +37,16 @@ export class CarService {
       withCredentials: true,
     });
   }
+
+  voteUp$(id: string): Observable<object> {
+    return this.http.get(`${environment.apiUrl}/vote-up/${id}`, {
+      withCredentials: true,
+    });
+  }
+
+  voteDown$(id: string): Observable<object> {
+    return this.http.get(`${environment.apiUrl}/vote-down/${id}`, {
+      withCredentials: true,
+    });
+  }
 }
