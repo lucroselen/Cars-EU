@@ -31,4 +31,10 @@ export class CarService {
       withCredentials: true,
     });
   }
+
+  delete$(id: string): Observable<object> {
+    return this.http.get(`${environment.apiUrl}/delete/${id}`, {
+      withCredentials: true,
+    });
+  }
 }

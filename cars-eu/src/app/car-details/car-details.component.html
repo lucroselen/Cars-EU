@@ -45,7 +45,7 @@
         </div>
         <div *ngIf="isOwnedBy" class="project-info-box mybuttons">
           <a class="btn btn-dark" routerLink="#"> Edit </a>
-          <a class="btn btn-danger" routerLink="#"> Delete </a>
+          <a class="btn btn-danger" (click)="handleDelete()"> Delete </a>
         </div>
         <div *ngIf="!isOwnedBy && isLogged" class="project-info-box mybuttons">
           <button class="btn btn-success" mode="up">Like</button>

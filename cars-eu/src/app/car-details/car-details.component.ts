@@ -14,16 +14,18 @@ export class CarDetailsComponent implements OnInit {
   public isOwnedBy: object;
   public isInFavorites: object;
   public isLogged: any;
+  public id: string;
   constructor(
     public carService: CarService,
     public route: ActivatedRoute,
     public router: Router
-  ) {}
+  ) {
+    this.isLogged = localStorage.getItem('id');
+    this.id = this.route.snapshot.params['id'];
+  }
 
   ngOnInit(): void {
-    this.isLogged = localStorage.getItem('id');
-    let id = this.route.snapshot.params['id'];
-    this.carService.getOne$(id).subscribe((e) => {
+    this.carService.getOne$(this.id).subscribe((e) => {
       if (!!e['error']) {
         this.router.navigate(['/404']);
         return;
@@ -32,6 +34,16 @@ export class CarDetailsComponent implements OnInit {
       this.voted = e['voted'];
       this.isOwnedBy = e['isOwnedBy'];
       this.isInFavorites = e['isInFavorites'];
+    });
+  }
+
+  handleDelete(): void {
+    this.carService.delete$(this.id).subscribe((e) => {
+      if (!!e['error']) {
+        this.router.navigate(['/404']);
+        return;
+      }
+      this.router.navigate(['/all-cars']);
     });
   }
 }
