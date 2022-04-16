@@ -1,5 +1,5 @@
 <div class="carContainer">
-  <div *ngIf="cars.length == 0; else elseBlock">
+  <div *ngIf="cars?.length == 0; else elseBlock">
     <h1>There are no cars in the database!</h1>
   </div>
   <ng-template #elseBlock>
