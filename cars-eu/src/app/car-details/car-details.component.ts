@@ -10,9 +10,9 @@ import { CarService } from '../car.service';
 })
 export class CarDetailsComponent implements OnInit {
   public car: object;
-  public voted: object;
-  public isOwnedBy: object;
-  public isInFavorites: object;
+  public voted: boolean;
+  public isOwnedBy: boolean;
+  public isInFavorites: boolean;
   public isLogged: any;
   public id: string;
   constructor(
