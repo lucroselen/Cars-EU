@@ -81,7 +81,7 @@ router.post("/edit/:id", isAuth, async (req, res) => {
   } = req.body;
   let carId = req.params.id;
   try {
-    if (creator?._id.toString() === req.user?._id) {
+    if (creator._id.toString() === req.user?._id) {
       await carServices.edit(
         carId,
         brand,

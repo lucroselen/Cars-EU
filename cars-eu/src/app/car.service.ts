@@ -14,6 +14,12 @@ export class CarService {
     });
   }
 
+  edit$(car: object, id: string): Observable<object> {
+    return this.http.post<object>(`${environment.apiUrl}/edit/${id}`, car, {
+      withCredentials: true,
+    });
+  }
+
   allCars$(): Observable<object> {
     return this.http.get(`${environment.apiUrl}/all-cars`, {
       withCredentials: true,
