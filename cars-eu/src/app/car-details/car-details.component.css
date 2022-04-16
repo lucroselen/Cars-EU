@@ -109,8 +109,13 @@ strong {
 
 .fix-margin {
   margin-top: 6.2rem;
+  margin-bottom: 15rem;
 }
 
 img {
   object-fit: cover;
+}
+
+.comment:not(:last-child) {
+  margin-bottom: 1rem;
 }

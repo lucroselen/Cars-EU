@@ -1,4 +1,10 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CarService } from '../car.service';
 
@@ -18,11 +24,16 @@ export class CarDetailsComponent implements OnInit {
   constructor(
     public carService: CarService,
     public route: ActivatedRoute,
-    public router: Router
+    public router: Router,
+    public formBuilder: FormBuilder
   ) {
     this.isLogged = localStorage.getItem('id');
     this.id = this.route.snapshot.params['id'];
   }
+
+  commentFormGroup: FormGroup = this.formBuilder.group({
+    comment: new FormControl(null, [Validators.required]),
+  });
   proceed(): void {
     let currentUrl = this.router.url;
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
@@ -81,5 +92,13 @@ export class CarDetailsComponent implements OnInit {
       }
       this.proceed();
     });
+  }
+
+  handleComment(): void {
+    this.carService
+      .comment$(this.id, this.commentFormGroup.value)
+      .subscribe(() => {
+        this.proceed();
+      });
   }
 }

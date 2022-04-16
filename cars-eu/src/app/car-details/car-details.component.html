@@ -89,13 +89,14 @@
           class="rounded details-img"
         />
         <div id="wrapper">
-          <form action="#" onSubmit="{addComment}" method="POST">
+          <form [formGroup]="commentFormGroup" (ngSubmit)="handleComment()">
             <div class="mb-4">
               <textarea
                 class="form-control"
                 id="comment"
                 rows="3"
                 name="comment"
+                formControlName="comment"
                 placeholder="Write a comment..."
               ></textarea>
               <input
@@ -106,9 +107,12 @@
             </div>
           </form>
         </div>
-        <div class="project-info-box fix-margin">
-          <p *ngIf="car['comments'].length > 0">
-            <strong></strong>
+        <div
+          *ngIf="car['comments'].length > 0"
+          class="project-info-box fix-margin"
+        >
+          <p class="comment" *ngFor="let comment of car['comments']">
+            <strong>{{ comment }}</strong>
           </p>
           <p class="h4" *ngIf="car['comments'].length == 0">
             Be the first to comment this car!

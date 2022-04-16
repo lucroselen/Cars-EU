@@ -61,4 +61,14 @@ export class CarService {
       withCredentials: true,
     });
   }
+
+  comment$(id: string, comment: string): Observable<object> {
+    return this.http.post<object>(
+      `${environment.apiUrl}/comment/${id}`,
+      comment,
+      {
+        withCredentials: true,
+      }
+    );
+  }
 }
