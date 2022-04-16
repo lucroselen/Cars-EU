@@ -10,21 +10,37 @@
               alt="img"
             />
           </div>
-          <div class="col-md-7">
-            <strong class="h2">
-              {{ person.firstName }} {{ person.lastName }}
-            </strong>
-            <span>
-              <h3>FAVORITE CARS:</h3>
-            </span>
-
-            <hr />
-            <p>
-              <strong>
-                <p class="h2">You don't have any favorite cars yet!</p>
+          <div *ngIf="!person; else elseBlock"><h3>LOADING...</h3></div>
+          <ng-template #elseBlock>
+            <div class="col-md-7">
+              <strong class="h2">
+                {{ person.firstName }} {{ person.lastName }}
               </strong>
-            </p>
-          </div>
+              <span>
+                <h3>FAVORITE CARS:</h3>
+              </span>
+
+              <hr />
+              <div *ngIf="person.favorites.length > 0; else elseBlock">
+                <div *ngFor="let car of person.favorites">
+                  <strong>
+                    <a [routerLink]="['../../details', car._id]">
+                      {{ car.brand }} {{ car.model }} {{ car.year }}
+                      {{ car.fuelType }}</a
+                    >
+                  </strong>
+                </div>
+              </div>
+
+              <ng-template #elseBlock
+                ><p>
+                  <strong>
+                    <p class="h2">You don't have any favorite cars yet!</p>
+                  </strong>
+                </p></ng-template
+              >
+            </div>
+          </ng-template>
         </div>
       </div>
     </div>

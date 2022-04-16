@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { AuthService } from 'src/app/auth.service';
+import { UserService } from 'src/app/core/user.service';
 
 @Component({
   encapsulation: ViewEncapsulation.ShadowDom,
@@ -9,11 +9,10 @@ import { AuthService } from 'src/app/auth.service';
 })
 export class ProfileComponent implements OnInit {
   person: any;
-  currentUser$: any;
-  constructor(public authService: AuthService) {}
+  constructor(public userService: UserService) {}
 
   ngOnInit(): void {
-    this.currentUser$ = this.authService.currentUser$.subscribe((e) => {
+    this.userService.getProfile$().subscribe((e) => {
       this.person = e;
     });
   }
