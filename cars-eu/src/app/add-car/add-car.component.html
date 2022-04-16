@@ -6,11 +6,7 @@
           <div class="card">
             <div class="card-body p-4 p-md-5">
               <h3 class="mb-4 pb-2">Add a Car</h3>
-              <form
-                action="/add"
-                [formGroup]="addFormGroup"
-                (ngSubmit)="handleAdd()"
-              >
+              <form [formGroup]="addFormGroup" (ngSubmit)="handleAdd()">
                 <div class="row">
                   <div class="col-md-6 mb-4">
                     <div class="form-outline">
