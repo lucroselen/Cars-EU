@@ -6,7 +6,9 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { subscribeOn, tap } from 'rxjs';
 import { CarService } from '../car.service';
+import { UserService } from '../core/user.service';
 
 @Component({
   encapsulation: ViewEncapsulation.ShadowDom,
@@ -25,21 +27,16 @@ export class CarDetailsComponent implements OnInit {
     public carService: CarService,
     public route: ActivatedRoute,
     public router: Router,
-    public formBuilder: FormBuilder
+    public formBuilder: FormBuilder,
+    public userService: UserService
   ) {
     this.isLogged = localStorage.getItem('id');
     this.id = this.route.snapshot.params['id'];
   }
 
   commentFormGroup: FormGroup = this.formBuilder.group({
-    comment: new FormControl(null, [Validators.required]),
+    comment: new FormControl('', [Validators.required]),
   });
-  proceed(): void {
-    let currentUrl = this.router.url;
-    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-    this.router.onSameUrlNavigation = 'reload';
-    this.router.navigate([currentUrl]);
-  }
 
   ngOnInit(): void {
     this.carService.getOne$(this.id).subscribe((e) => {
@@ -70,7 +67,8 @@ export class CarDetailsComponent implements OnInit {
         this.router.navigate(['/404']);
         return;
       }
-      this.proceed();
+      this.car['rating'] += 1;
+      this.voted = true;
     });
   }
 
@@ -80,7 +78,8 @@ export class CarDetailsComponent implements OnInit {
         this.router.navigate(['/404']);
         return;
       }
-      this.proceed();
+      this.car['rating'] += 1;
+      this.voted = true;
     });
   }
 
@@ -90,15 +89,24 @@ export class CarDetailsComponent implements OnInit {
         this.router.navigate(['/404']);
         return;
       }
-      this.proceed();
+      this.isInFavorites = true;
     });
   }
 
   handleComment(): void {
-    this.carService
-      .comment$(this.id, this.commentFormGroup.value)
-      .subscribe(() => {
-        this.proceed();
-      });
+    this.carService.comment$(this.id, this.commentFormGroup.value).subscribe();
+    let commentingPerson: string;
+
+    this.userService.getProfile$().subscribe({
+      next: (e) => {
+        commentingPerson = `${e['firstName']} ${e['lastName']}: `;
+        this.car['comments'].unshift(
+          `${commentingPerson}${this.commentFormGroup.value['comment']}`
+        );
+      },
+      complete: () => {
+        this.commentFormGroup.get('comment')?.setValue('');
+      },
+    });
   }
 }

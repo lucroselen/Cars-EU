@@ -12,7 +12,6 @@ export class HeaderComponent implements OnInit {
   person: any;
   currentUser$: any;
 
-  isLoggedIn$: Observable<boolean> = this.authService.isLoggedIn$;
   private isLoggingOut: boolean = false;
   constructor(public authService: AuthService, private router: Router) {}
 

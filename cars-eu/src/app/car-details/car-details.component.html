@@ -84,12 +84,16 @@
         <img
           src="{{ car['imgUrl'] }}"
           alt="project-pic"
-          height="60.6%"
+          height="546.5px"
           width="100%"
           class="rounded details-img"
         />
         <div id="wrapper">
-          <form [formGroup]="commentFormGroup" (ngSubmit)="handleComment()">
+          <form
+            id="commentForm"
+            [formGroup]="commentFormGroup"
+            (ngSubmit)="handleComment()"
+          >
             <div class="mb-4">
               <textarea
                 class="form-control"
@@ -98,6 +102,7 @@
                 name="comment"
                 formControlName="comment"
                 placeholder="Write a comment..."
+                required
               ></textarea>
               <input
                 class="btn btn-dark comment-btn btn-lg"
@@ -114,9 +119,12 @@
           <p class="comment" *ngFor="let comment of car['comments']">
             <strong>{{ comment }}</strong>
           </p>
-          <p class="h4" *ngIf="car['comments'].length == 0">
-            Be the first to comment this car!
-          </p>
+        </div>
+        <div
+          *ngIf="car['comments'].length == 0"
+          class="project-info-box fix-margin"
+        >
+          <p class="h4">Be the first to comment this car!</p>
         </div>
       </div>
     </div>

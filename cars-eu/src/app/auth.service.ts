@@ -13,8 +13,6 @@ export class AuthService {
 
   currentUser$ = this._currentUser.asObservable();
 
-  isLoggedIn$ = this.currentUser$.pipe(map((user) => !!user));
-
   constructor(private httpClient: HttpClient) {}
 
   login$(userData: { email: string; password: string }): Observable<IUser> {
