@@ -94,6 +94,9 @@ export class CarDetailsComponent implements OnInit {
   }
 
   handleComment(): void {
+    if (this.commentFormGroup.value['comment'].trim() === '') {
+      return;
+    }
     this.carService.comment$(this.id, this.commentFormGroup.value).subscribe();
     let commentingPerson: string;
 

@@ -204,7 +204,7 @@ router.post("/comment/:id", isAuth, async (req, res) => {
   }
   let carId = req.params.id;
   let user = await authServices.getUserById(req.user?._id);
-  let userComment = `${user.firstName} ${user.lastName}: ${comment}`;
+  let userComment = `${user.firstName} ${user.lastName}: ${comment.trim()}`;
   try {
     await carServices.comment(carId, userComment);
 
