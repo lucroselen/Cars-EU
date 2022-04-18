@@ -49,26 +49,33 @@ export class EditCarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.carService.getOne$(this.id).subscribe((e) => {
-      if (!!e['error']) {
-        this.router.navigate(['/404']);
-        return;
-      }
-      this.car = e['car'];
-      this.isOwnedBy = e['isOwnedBy'];
-      if (this.isOwnedBy == false) {
-        this.router.navigate([`/details/${this.id}`]);
-        this.notifications.showError('You are not the owner of this car!');
-        return;
-      }
-      this.editFormGroup.get('brand')?.setValue(this.car['brand']);
-      this.editFormGroup.get('model')?.setValue(this.car['model']);
-      this.editFormGroup.get('year')?.setValue(this.car['year']);
-      this.editFormGroup.get('imgUrl')?.setValue(this.car['imgUrl']);
-      this.editFormGroup.get('fuelType')?.setValue(this.car['fuelType']);
-      this.editFormGroup.get('description')?.setValue(this.car['description']);
-      this.editFormGroup.get('mileage')?.setValue(this.car['mileage']);
-      this.editFormGroup.get('price')?.setValue(this.car['price']);
+    this.carService.getOne$(this.id).subscribe({
+      next: (e) => {
+        if (!!e['error']) {
+          this.router.navigate(['/404']);
+          return;
+        }
+        this.car = e['car'];
+        this.isOwnedBy = e['isOwnedBy'];
+        if (this.isOwnedBy == false) {
+          this.router.navigate([`/details/${this.id}`]);
+          this.notifications.showError('You are not the owner of this car!');
+          return;
+        }
+        this.editFormGroup.get('brand')?.setValue(this.car['brand']);
+        this.editFormGroup.get('model')?.setValue(this.car['model']);
+        this.editFormGroup.get('year')?.setValue(this.car['year']);
+        this.editFormGroup.get('imgUrl')?.setValue(this.car['imgUrl']);
+        this.editFormGroup.get('fuelType')?.setValue(this.car['fuelType']);
+        this.editFormGroup
+          .get('description')
+          ?.setValue(this.car['description']);
+        this.editFormGroup.get('mileage')?.setValue(this.car['mileage']);
+        this.editFormGroup.get('price')?.setValue(this.car['price']);
+      },
+      error: (err) => {
+        this.notifications.showError(err.error.error);
+      },
     });
   }
   handleEdit(): void {
