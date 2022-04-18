@@ -12,7 +12,10 @@ export class AllCarsComponent implements OnInit {
 
   ngOnInit(): void {
     this.carService.allCars$().subscribe((e) => {
-      this.cars = e['cars'];
+      this.cars = e['cars'].map((e) => {
+        e.stars = this.carService.starsGenerator(e.rating);
+        return e;
+      });
     });
   }
 }

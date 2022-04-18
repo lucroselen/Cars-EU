@@ -12,7 +12,10 @@ export class Top10Component implements OnInit {
 
   ngOnInit(): void {
     this.carService.top10Cars$().subscribe((e) => {
-      this.cars = e['cars'];
+      this.cars = e['cars'].map((e) => {
+        e.stars = this.carService.starsGenerator(e.rating);
+        return e;
+      });
     });
   }
 }

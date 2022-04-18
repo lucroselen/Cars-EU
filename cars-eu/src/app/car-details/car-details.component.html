@@ -12,32 +12,46 @@
         </div>
         <div class="project-info-box">
           <p>
-            <b>Brand: {{ car["brand"] }}</b>
+            <b>Brand:</b>
+            {{ car["brand"] }}
           </p>
           <p>
-            <b>Model: {{ car["model"] }}</b>
+            <b>Model:</b>
+            {{ car["model"] }}
           </p>
           <p>
-            <b>Year: {{ car["year"] }}</b>
+            <b>Year:</b>
+            {{ car["year"] }}
           </p>
           <p>
-            <b>Fuel Type: {{ car["fuelType"] }}</b>
+            <b>Fuel Type:</b>
+            {{ car["fuelType"] }}
           </p>
           <p>
-            <b>Mileage: {{ car["mileage"] }} KM</b>
+            <b>Mileage:</b>
+            {{ car["mileage"] }} KM
           </p>
           <p>
+            <b>Added by:</b>
+            {{ car["creator"]["firstName"] }}
+            {{ car["creator"]["lastName"] }} (contact for a deal)
+          </p>
+          <p>
+            <b>Price:</b>
+            {{ car["price"] }} BGN
+          </p>
+          <p>
+            <b>Current car rating: </b>
             <b
-              >Added by: {{ car["creator"]["firstName"] }}
-              {{ car["creator"]["lastName"] }} (contact for a deal)</b
+              [style.color]="
+                car['rating'] === 0
+                  ? 'black'
+                  : car['rating'] > 0
+                  ? 'orange'
+                  : 'red'
+              "
+              >{{ car["rating"] }} {{ stars }}</b
             >
-          </p>
-          <p>
-            <b>Price: {{ car["price"] }} BGN</b>
-          </p>
-          <p>
-            <b>Current car rating: {{ car["rating"] }}</b>
-            <b> </b>
           </p>
         </div>
         <div class="project-info-box mybuttons" *ngIf="voted">

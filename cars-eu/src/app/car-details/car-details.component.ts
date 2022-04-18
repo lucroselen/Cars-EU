@@ -23,6 +23,7 @@ export class CarDetailsComponent implements OnInit {
   public isInFavorites: boolean;
   public isLogged: any;
   public id: string;
+  public stars: string;
   constructor(
     public carService: CarService,
     public route: ActivatedRoute,
@@ -39,15 +40,20 @@ export class CarDetailsComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    this.carService.getOne$(this.id).subscribe((e) => {
-      if (!!e['error']) {
-        this.router.navigate(['/404']);
-        return;
-      }
-      this.car = e['car'];
-      this.voted = e['voted'];
-      this.isOwnedBy = e['isOwnedBy'];
-      this.isInFavorites = e['isInFavorites'];
+    this.carService.getOne$(this.id).subscribe({
+      next: (e) => {
+        if (!!e['error']) {
+          this.router.navigate(['/404']);
+          return;
+        }
+        this.car = e['car'];
+        this.voted = e['voted'];
+        this.isOwnedBy = e['isOwnedBy'];
+        this.isInFavorites = e['isInFavorites'];
+      },
+      complete: () => {
+        this.stars = this.carService.starsGenerator(this.car['rating']);
+      },
     });
   }
 
@@ -67,6 +73,7 @@ export class CarDetailsComponent implements OnInit {
         this.router.navigate(['/404']);
         return;
       }
+      this.stars = this.carService.starsGenerator(this.car['rating'] + 1);
       this.car['rating'] += 1;
       this.voted = true;
     });
@@ -78,7 +85,8 @@ export class CarDetailsComponent implements OnInit {
         this.router.navigate(['/404']);
         return;
       }
-      this.car['rating'] += 1;
+      this.stars = this.carService.starsGenerator(this.car['rating'] - 1);
+      this.car['rating'] -= 1;
       this.voted = true;
     });
   }

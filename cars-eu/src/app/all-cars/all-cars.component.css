@@ -71,3 +71,8 @@
   color: #fff;
   cursor: pointer;
 }
+
+.stars {
+  margin-bottom: 0.25rem;
+  margin-top: -0.25rem;
+}

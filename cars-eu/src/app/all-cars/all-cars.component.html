@@ -6,6 +6,7 @@
     <div class="card" *ngFor="let car of cars">
       <div class="carText">
         <h3>{{ car["brand"] }} {{ car["model"] }}</h3>
+        <span class="stars"> {{ car["stars"] }}</span>
         <span
           ><b
             >{{ car["year"] }}, {{ car["fuelType"] }}, {{ car["mileage"] }} KM,
