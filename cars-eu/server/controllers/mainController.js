@@ -202,8 +202,12 @@ router.post("/comment/:id", isAuth, async (req, res) => {
     res.status(400).json({ error: "Comment is empty." });
     return;
   }
+  if (!req.user._id) {
+    res.status(400).json({ error: "You must be logged in to comment." });
+    return;
+  }
   let carId = req.params.id;
-  let user = await authServices.getUserById(req.user?._id);
+  let user = await authServices.getUserById(req.user._id);
   let userComment = `${user.firstName} ${user.lastName}: ${comment.trim()}`;
   try {
     await carServices.comment(carId, userComment);
