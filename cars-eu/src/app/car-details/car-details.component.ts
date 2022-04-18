@@ -8,6 +8,7 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { subscribeOn, tap } from 'rxjs';
 import { CarService } from '../car.service';
+import { NotificationsService } from '../core/notifications.service';
 import { UserService } from '../core/user.service';
 
 @Component({
@@ -29,7 +30,8 @@ export class CarDetailsComponent implements OnInit {
     public route: ActivatedRoute,
     public router: Router,
     public formBuilder: FormBuilder,
-    public userService: UserService
+    public userService: UserService,
+    private notifications: NotificationsService
   ) {
     this.isLogged = localStorage.getItem('id');
     this.id = this.route.snapshot.params['id'];
@@ -102,7 +104,13 @@ export class CarDetailsComponent implements OnInit {
   }
 
   handleComment(): void {
-    if (this.commentFormGroup.value['comment'].trim() === '') {
+    // front-end validations
+    if (
+      this.commentFormGroup.value['comment'].trim() === '' ||
+      this.commentFormGroup.get('comment')?.hasError('required')
+    ) {
+      this.notifications.showInfo('Cannot post empty comments.');
+      this.commentFormGroup.get('comment')?.setValue('');
       return;
     }
     this.carService.comment$(this.id, this.commentFormGroup.value).subscribe();
@@ -114,9 +122,14 @@ export class CarDetailsComponent implements OnInit {
         this.car['comments'].unshift(
           `${commentingPerson}${this.commentFormGroup.value['comment']}`
         );
+        this.notifications.showSuccess('Comment added!');
       },
       complete: () => {
         this.commentFormGroup.get('comment')?.setValue('');
+      },
+      error: (err) => {
+        //back-end validation
+        this.notifications.showError(err.error.error);
       },
     });
   }
