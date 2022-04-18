@@ -1,6 +1,7 @@
 import { RouterModule, Routes } from '@angular/router';
 import { AddCarComponent } from './add-car/add-car.component';
 import { AllCarsComponent } from './all-cars/all-cars.component';
+import { GuestGuard } from './auth/guest.guard';
 import { CarDetailsComponent } from './car-details/car-details.component';
 import { EditCarComponent } from './edit-car/edit-car.component';
 import { HomepageComponent } from './homepage/homepage.component';
@@ -37,10 +38,12 @@ const routes: Routes = [
   {
     path: 'add',
     component: AddCarComponent,
+    canActivate: [GuestGuard],
   },
   {
     path: 'edit/:id',
     component: EditCarComponent,
+    canActivate: [GuestGuard],
   },
   {
     path: '404',
