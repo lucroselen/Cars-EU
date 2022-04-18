@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CarService } from '../car.service';
+import { NotificationsService } from '../core/notifications.service';
 
 @Component({
   encapsulation: ViewEncapsulation.ShadowDom,
@@ -37,7 +38,8 @@ export class AddCarComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private carService: CarService
+    private carService: CarService,
+    private notifications: NotificationsService
   ) {}
 
   ngOnInit(): void {}
