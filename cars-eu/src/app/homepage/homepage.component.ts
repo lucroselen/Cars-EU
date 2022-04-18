@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NotificationsService } from '../core/notifications.service';
 
 @Component({
   selector: 'app-homepage',
@@ -7,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomepageComponent implements OnInit {
   person: any;
-  constructor() {}
+  constructor(private notifications: NotificationsService) {}
 
   ngOnInit(): void {
     this.person = localStorage.getItem('id');
+    this.notifications.showInfo('Welcome to CARS EU!');
   }
 }

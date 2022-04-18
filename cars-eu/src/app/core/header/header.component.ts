@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth.service';
-import { Observable } from 'rxjs';
+import { NotificationsService } from '../notifications.service';
 
 @Component({
   selector: 'app-header',
@@ -13,7 +13,11 @@ export class HeaderComponent implements OnInit {
   currentUser$: any;
 
   private isLoggingOut: boolean = false;
-  constructor(public authService: AuthService, private router: Router) {}
+  constructor(
+    public authService: AuthService,
+    private router: Router,
+    private notifications: NotificationsService
+  ) {}
 
   ngOnInit(): void {
     this.currentUser$ = this.authService.currentUser$.subscribe((e) => {
@@ -34,6 +38,7 @@ export class HeaderComponent implements OnInit {
         this.router.navigate(['/user/login']);
         this.authService.handleLogout();
         localStorage.removeItem('id');
+        this.notifications.showSuccess('Logout successful!');
       },
       error: () => {
         this.isLoggingOut = false;
