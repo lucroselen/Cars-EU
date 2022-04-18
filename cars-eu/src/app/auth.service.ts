@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, EMPTY } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { IUser } from './core/interfaces/user';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -53,7 +53,7 @@ export class AuthService {
         tap((currentProfile) => {
           this.handleLogin(currentProfile);
         }),
-        catchError((err) => {
+        catchError(() => {
           return EMPTY;
         })
       );
