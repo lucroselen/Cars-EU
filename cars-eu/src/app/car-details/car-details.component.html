@@ -102,7 +102,7 @@
           width="100%"
           class="rounded details-img"
         />
-        <div id="wrapper">
+        <div *ngIf="isLogged" id="wrapper">
           <form
             id="commentForm"
             [formGroup]="commentFormGroup"
@@ -127,7 +127,7 @@
           </form>
         </div>
         <div
-          *ngIf="car['comments'].length > 0"
+          *ngIf="car['comments'].length > 0 && isLogged"
           class="project-info-box fix-margin"
         >
           <p class="comment" *ngFor="let comment of car['comments']">
