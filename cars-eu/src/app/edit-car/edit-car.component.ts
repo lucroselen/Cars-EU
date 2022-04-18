@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CarService } from '../car.service';
+import { NotificationsService } from '../core/notifications.service';
 
 @Component({
   encapsulation: ViewEncapsulation.ShadowDom,
@@ -41,7 +42,8 @@ export class EditCarComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private carService: CarService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private notifications: NotificationsService
   ) {
     this.id = this.route.snapshot.params['id'];
   }
@@ -55,7 +57,8 @@ export class EditCarComponent implements OnInit {
       this.car = e['car'];
       this.isOwnedBy = e['isOwnedBy'];
       if (this.isOwnedBy == false) {
-        this.router.navigate(['/404']);
+        this.router.navigate([`/details/${this.id}`]);
+        this.notifications.showError('You are not the owner of this car!');
         return;
       }
       this.editFormGroup.get('brand')?.setValue(this.car['brand']);
