@@ -6,7 +6,6 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { subscribeOn, tap } from 'rxjs';
 import { CarService } from '../car.service';
 import { NotificationsService } from '../core/notifications.service';
 import { UserService } from '../core/user.service';
@@ -60,46 +59,70 @@ export class CarDetailsComponent implements OnInit {
   }
 
   handleDelete(): void {
-    this.carService.delete$(this.id).subscribe((e) => {
-      if (!!e['error']) {
-        this.router.navigate(['/404']);
-        return;
-      }
-      this.router.navigate(['/all-cars']);
+    this.carService.delete$(this.id).subscribe({
+      next: (e) => {
+        if (!!e['error']) {
+          this.router.navigate(['/404']);
+          return;
+        }
+        this.notifications.showSuccess('Car deleted successfully!');
+        this.router.navigate(['/all-cars']);
+      },
+      error: (err) => {
+        this.notifications.showError(err.error.error);
+      },
     });
   }
 
   handleLike(): void {
-    this.carService.voteUp$(this.id).subscribe((e) => {
-      if (!!e['error']) {
-        this.router.navigate(['/404']);
-        return;
-      }
-      this.stars = this.carService.starsGenerator(this.car['rating'] + 1);
-      this.car['rating'] += 1;
-      this.voted = true;
+    this.carService.voteUp$(this.id).subscribe({
+      next: (e) => {
+        if (!!e['error']) {
+          this.router.navigate(['/404']);
+          return;
+        }
+        this.stars = this.carService.starsGenerator(this.car['rating'] + 1);
+        this.car['rating'] += 1;
+        this.voted = true;
+        this.notifications.showSuccess('Car liked!');
+      },
+      error: (err) => {
+        this.notifications.showError(err.error.error);
+      },
     });
   }
 
   handleDislike(): void {
-    this.carService.voteDown$(this.id).subscribe((e) => {
-      if (!!e['error']) {
-        this.router.navigate(['/404']);
-        return;
-      }
-      this.stars = this.carService.starsGenerator(this.car['rating'] - 1);
-      this.car['rating'] -= 1;
-      this.voted = true;
+    this.carService.voteDown$(this.id).subscribe({
+      next: (e) => {
+        if (!!e['error']) {
+          this.router.navigate(['/404']);
+          return;
+        }
+        this.stars = this.carService.starsGenerator(this.car['rating'] - 1);
+        this.car['rating'] -= 1;
+        this.voted = true;
+        this.notifications.showSuccess('Car disliked!');
+      },
+      error: (err) => {
+        this.notifications.showError(err.error.error);
+      },
     });
   }
 
   handleFavorite(): void {
-    this.carService.favorite$(this.id).subscribe((e) => {
-      if (!!e['error']) {
-        this.router.navigate(['/404']);
-        return;
-      }
-      this.isInFavorites = true;
+    this.carService.favorite$(this.id).subscribe({
+      next: (e) => {
+        if (!!e['error']) {
+          this.router.navigate(['/404']);
+          return;
+        }
+        this.notifications.showSuccess('Car added to favorites!');
+        this.isInFavorites = true;
+      },
+      error: (err) => {
+        this.notifications.showError(err.error.error);
+      },
     });
   }
 
