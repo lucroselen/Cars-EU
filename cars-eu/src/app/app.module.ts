@@ -38,7 +38,7 @@ import { TrimPipe } from './trim.pipe';
     BrowserModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot({
-      timeOut: 10000,
+      timeOut: 5000,
       closeButton: true,
       progressBar: true,
     }),
