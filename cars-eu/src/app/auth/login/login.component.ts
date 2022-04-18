@@ -7,6 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NotificationsService } from 'src/app/core/notifications.service';
 
 @Component({
   selector: 'app-login',
@@ -15,31 +16,61 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
   loginFormGroup: FormGroup = this.formBuilder.group({
-    email: new FormControl(null, [
-      Validators.required,
-      Validators.minLength(5),
-    ]),
-    password: new FormControl(null, [
-      Validators.required,
-      Validators.minLength(5),
-    ]),
+    email: new FormControl(
+      null,
+      Validators.compose([Validators.required, Validators.email])
+    ),
+    password: new FormControl(
+      null,
+      Validators.compose([
+        Validators.required,
+        Validators.minLength(6),
+        Validators.pattern(/^[^ ]*$/),
+      ])
+    ),
   });
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private notifications: NotificationsService
   ) {}
 
   ngOnInit(): void {}
 
   handleLogin(): void {
+    //front-end validation
+    if (
+      this.loginFormGroup.get('email')?.hasError('required') ||
+      this.loginFormGroup.get('password')?.hasError('required')
+    ) {
+      this.notifications.showError('Both fields are required!');
+      return;
+    }
+    if (this.loginFormGroup.get('email')?.hasError('email')) {
+      this.notifications.showError('Email address is incorrect format!');
+      return;
+    }
+    if (this.loginFormGroup.get('password')?.hasError('minlength')) {
+      this.notifications.showError(
+        'Password should be at least 6 characters long!'
+      );
+      return;
+    }
+    if (this.loginFormGroup.get('password')?.hasError('pattern')) {
+      this.notifications.showError('Password cannot contain white spaces!');
+      return;
+    }
     this.authService.login$(this.loginFormGroup.value).subscribe({
       next: (e: any) => {
         localStorage.setItem('id', e.id);
         this.authService.authenticate().subscribe();
-      },
-      complete: () => {
         this.router.navigate(['/all-cars']);
+        this.notifications.showSuccess('Login successful!');
+      },
+      error: (err) => {
+        //back-end validation
+        this.notifications.showError(err.error.error);
       },
     });
   }
