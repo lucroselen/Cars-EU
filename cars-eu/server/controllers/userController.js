@@ -11,7 +11,7 @@ router.post("/login", isAlreadyLogged, async (req, res) => {
     let { email, password } = req.body;
 
     if (!email || !password) {
-      res.json({ error: "You must fill in both fields!" });
+      res.status(400).json({ error: "You must fill in both fields!" });
       return;
     }
     let user = await authServices.login(email, password);

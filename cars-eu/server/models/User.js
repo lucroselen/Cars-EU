@@ -42,7 +42,7 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: [true, "Password should not be empty!"],
-    minLength: [4, "Password should be at least 6 characters long!"],
+    minLength: [6, "Password should be at least 6 characters long!"],
     validate: [/^[^ ]*$/, "Password cannot contain white spaces!"],
   },
   favorites: [
