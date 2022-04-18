@@ -13,4 +13,7 @@ export class NotificationsService {
   public showError(message: string): void {
     this.toastrService.error(message, 'Error!');
   }
+  public showInfo(message: string): void {
+    this.toastrService.info(message, 'Info:');
+  }
 }
