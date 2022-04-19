@@ -194,6 +194,7 @@ export class EditCarComponent implements OnInit {
     this.carService.edit$(body, this.id).subscribe({
       next: () => {
         this.router.navigate([`/details/${this.id}`]);
+        this.notifications.showSuccess('Car edited successfully!');
       },
       error: (err) => {
         //back-end validation
