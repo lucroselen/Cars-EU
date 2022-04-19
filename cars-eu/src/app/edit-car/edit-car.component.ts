@@ -20,23 +20,41 @@ export class EditCarComponent implements OnInit {
   public car: object;
   private isOwnedBy: boolean;
   editFormGroup: FormGroup = this.formBuilder.group({
-    brand: new FormControl('', [Validators.required]),
-    model: new FormControl(null, [Validators.required]),
+    brand: new FormControl(null, [
+      Validators.required,
+      Validators.minLength(3),
+    ]),
+    model: new FormControl(null, [
+      Validators.required,
+      Validators.minLength(2),
+    ]),
     imgUrl: new FormControl(null, [
       Validators.required,
-      Validators.minLength(5),
+      Validators.pattern(/^https?:\/\//i),
     ]),
     fuelType: new FormControl(null, [
       Validators.required,
       Validators.minLength(3),
     ]),
-    year: new FormControl(null, [Validators.required, Validators.minLength(4)]),
+    year: new FormControl(null, [
+      Validators.required,
+      Validators.min(1960),
+      Validators.max(2022),
+    ]),
     description: new FormControl(null, [
       Validators.required,
-      Validators.minLength(10),
+      Validators.minLength(8),
     ]),
-    mileage: new FormControl(null, [Validators.required]),
-    price: new FormControl(null, [Validators.required]),
+    mileage: new FormControl(null, [
+      Validators.required,
+      Validators.min(0),
+      Validators.max(500000),
+    ]),
+    price: new FormControl(null, [
+      Validators.required,
+      Validators.min(0),
+      Validators.max(999999999999),
+    ]),
   });
   constructor(
     private formBuilder: FormBuilder,
@@ -91,7 +109,77 @@ export class EditCarComponent implements OnInit {
       mileage,
       price,
     } = this.editFormGroup.value;
-
+    //front-end validations
+    if (
+      this.editFormGroup.get('brand')?.hasError('required') ||
+      this.editFormGroup.get('model')?.hasError('required') ||
+      this.editFormGroup.get('imgUrl')?.hasError('required') ||
+      this.editFormGroup.get('fuelType')?.hasError('required') ||
+      this.editFormGroup.get('description')?.hasError('required') ||
+      this.editFormGroup.get('mileage')?.hasError('required') ||
+      this.editFormGroup.get('price')?.hasError('required') ||
+      this.editFormGroup.get('year')?.hasError('required')
+    ) {
+      this.notifications.showError('All fields are required!');
+      return;
+    }
+    if (this.editFormGroup.get('brand')?.hasError('minlength')) {
+      this.notifications.showError(
+        'The name of the brand should be at least 3 characters!'
+      );
+      return;
+    }
+    if (this.editFormGroup.get('model')?.hasError('minlength')) {
+      this.notifications.showError(
+        'The name of the model should be at least 2 characters!'
+      );
+      return;
+    }
+    if (this.editFormGroup.get('fuelType')?.hasError('minlength')) {
+      this.notifications.showError(
+        'The fuel type should be at least 3 characters!'
+      );
+      return;
+    }
+    if (
+      this.editFormGroup.get('year')?.hasError('min') ||
+      this.editFormGroup.get('year')?.hasError('max')
+    ) {
+      this.notifications.showError(
+        'Please provide a year between 1960 and 2022!'
+      );
+      return;
+    }
+    if (this.editFormGroup.get('imgUrl')?.hasError('pattern')) {
+      this.notifications.showError(
+        'The car image should start with http:// or https://'
+      );
+      return;
+    }
+    if (this.editFormGroup.get('description')?.hasError('minlength')) {
+      this.notifications.showError(
+        'The description should be a minimum of 8 characters long!'
+      );
+      return;
+    }
+    if (
+      this.editFormGroup.get('mileage')?.hasError('min') ||
+      this.editFormGroup.get('mileage')?.hasError('max')
+    ) {
+      this.notifications.showError(
+        'Please provide a mileage between 0 and 500000!'
+      );
+      return;
+    }
+    if (
+      this.editFormGroup.get('price')?.hasError('min') ||
+      this.editFormGroup.get('price')?.hasError('max')
+    ) {
+      this.notifications.showError(
+        'Please provide a price between 0 and 999999999999!'
+      );
+      return;
+    }
     const body: object = {
       brand,
       model,
@@ -106,6 +194,10 @@ export class EditCarComponent implements OnInit {
     this.carService.edit$(body, this.id).subscribe({
       next: () => {
         this.router.navigate([`/details/${this.id}`]);
+      },
+      error: (err) => {
+        //back-end validation
+        this.notifications.showError(err.error.error);
       },
     });
   }
