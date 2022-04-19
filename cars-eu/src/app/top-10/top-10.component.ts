@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { CarService } from '../car.service';
 import { NotificationsService } from '../core/notifications.service';
 
@@ -11,17 +12,19 @@ export class Top10Component implements OnInit {
   public cars: [];
   constructor(
     private carService: CarService,
-    private notifications: NotificationsService
+    private notifications: NotificationsService,
+    private spinner: NgxSpinnerService
   ) {}
 
   ngOnInit(): void {
+    this.spinner.show();
     this.notifications.showInfo('The top 10 cars are being displayed!');
-
     this.carService.top10Cars$().subscribe((e) => {
       this.cars = e['cars'].map((e) => {
         e.stars = this.carService.starsGenerator(e.rating);
         return e;
       });
+      this.spinner.hide();
     });
   }
 }

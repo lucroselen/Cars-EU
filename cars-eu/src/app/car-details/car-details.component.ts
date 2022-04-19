@@ -6,6 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { CarService } from '../car.service';
 import { NotificationsService } from '../core/notifications.service';
 import { UserService } from '../core/user.service';
@@ -30,7 +31,8 @@ export class CarDetailsComponent implements OnInit {
     public router: Router,
     public formBuilder: FormBuilder,
     public userService: UserService,
-    private notifications: NotificationsService
+    private notifications: NotificationsService,
+    private spinner: NgxSpinnerService
   ) {
     this.isLogged = localStorage.getItem('id');
     this.id = this.route.snapshot.params['id'];
@@ -41,6 +43,7 @@ export class CarDetailsComponent implements OnInit {
   });
 
   ngOnInit(): void {
+    this.spinner.show();
     this.carService.getOne$(this.id).subscribe({
       next: (e) => {
         if (!!e['error']) {
@@ -54,11 +57,17 @@ export class CarDetailsComponent implements OnInit {
       },
       complete: () => {
         this.stars = this.carService.starsGenerator(this.car['rating']);
+        this.spinner.hide();
+      },
+      error: (err) => {
+        this.notifications.showError(err.error.error);
+        this.spinner.hide();
       },
     });
   }
 
   handleDelete(): void {
+    this.spinner.show();
     this.carService.delete$(this.id).subscribe({
       next: (e) => {
         if (!!e['error']) {
@@ -67,14 +76,17 @@ export class CarDetailsComponent implements OnInit {
         }
         this.notifications.showSuccess('Car deleted successfully!');
         this.router.navigate(['/all-cars']);
+        this.spinner.hide();
       },
       error: (err) => {
         this.notifications.showError(err.error.error);
+        this.spinner.hide();
       },
     });
   }
 
   handleLike(): void {
+    this.spinner.show();
     this.carService.voteUp$(this.id).subscribe({
       next: (e) => {
         if (!!e['error']) {
@@ -85,14 +97,17 @@ export class CarDetailsComponent implements OnInit {
         this.car['rating'] += 1;
         this.voted = true;
         this.notifications.showSuccess('Car liked!');
+        this.spinner.hide();
       },
       error: (err) => {
         this.notifications.showError(err.error.error);
+        this.spinner.hide();
       },
     });
   }
 
   handleDislike(): void {
+    this.spinner.show();
     this.carService.voteDown$(this.id).subscribe({
       next: (e) => {
         if (!!e['error']) {
@@ -103,14 +118,17 @@ export class CarDetailsComponent implements OnInit {
         this.car['rating'] -= 1;
         this.voted = true;
         this.notifications.showSuccess('Car disliked!');
+        this.spinner.hide();
       },
       error: (err) => {
         this.notifications.showError(err.error.error);
+        this.spinner.hide();
       },
     });
   }
 
   handleFavorite(): void {
+    this.spinner.show();
     this.carService.favorite$(this.id).subscribe({
       next: (e) => {
         if (!!e['error']) {
@@ -119,14 +137,18 @@ export class CarDetailsComponent implements OnInit {
         }
         this.notifications.showSuccess('Car added to favorites!');
         this.isInFavorites = true;
+        this.spinner.hide();
       },
       error: (err) => {
         this.notifications.showError(err.error.error);
+        this.spinner.hide();
       },
     });
   }
 
   handleComment(): void {
+    this.spinner.show();
+
     // front-end validations
     if (
       this.commentFormGroup.value['comment'].trim() === '' ||
@@ -149,10 +171,12 @@ export class CarDetailsComponent implements OnInit {
       },
       complete: () => {
         this.commentFormGroup.get('comment')?.setValue('');
+        this.spinner.hide();
       },
       error: (err) => {
         //back-end validation
         this.notifications.showError(err.error.error);
+        this.spinner.hide();
       },
     });
   }

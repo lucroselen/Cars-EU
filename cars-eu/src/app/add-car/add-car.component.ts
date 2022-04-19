@@ -6,6 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { CarService } from '../car.service';
 import { NotificationsService } from '../core/notifications.service';
 
@@ -57,7 +58,8 @@ export class AddCarComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private carService: CarService,
-    private notifications: NotificationsService
+    private notifications: NotificationsService,
+    private spinner: NgxSpinnerService
   ) {}
 
   ngOnInit(): void {}
@@ -145,6 +147,7 @@ export class AddCarComponent implements OnInit {
       );
       return;
     }
+    this.spinner.show();
 
     const body: object = {
       brand,
@@ -159,12 +162,14 @@ export class AddCarComponent implements OnInit {
     };
     this.carService.add$(body).subscribe({
       next: () => {
+        this.spinner.hide();
         this.router.navigate(['/all-cars']);
         this.notifications.showSuccess('Car created successfully!');
       },
       error: (err) => {
         //back-end validation
         this.notifications.showError(err.error.error);
+        this.spinner.hide();
       },
     });
   }

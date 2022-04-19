@@ -6,6 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { CarService } from '../car.service';
 import { NotificationsService } from '../core/notifications.service';
 
@@ -61,12 +62,14 @@ export class EditCarComponent implements OnInit {
     private router: Router,
     private carService: CarService,
     private route: ActivatedRoute,
-    private notifications: NotificationsService
+    private notifications: NotificationsService,
+    private spinner: NgxSpinnerService
   ) {
     this.id = this.route.snapshot.params['id'];
   }
 
   ngOnInit(): void {
+    this.spinner.show();
     this.carService.getOne$(this.id).subscribe({
       next: (e) => {
         if (!!e['error']) {
@@ -90,6 +93,7 @@ export class EditCarComponent implements OnInit {
           ?.setValue(this.car['description']);
         this.editFormGroup.get('mileage')?.setValue(this.car['mileage']);
         this.editFormGroup.get('price')?.setValue(this.car['price']);
+        this.spinner.hide();
       },
       error: (err) => {
         this.notifications.showError(err.error.error);
@@ -180,6 +184,8 @@ export class EditCarComponent implements OnInit {
       );
       return;
     }
+    this.spinner.show();
+
     const body: object = {
       brand,
       model,
@@ -193,6 +199,7 @@ export class EditCarComponent implements OnInit {
     };
     this.carService.edit$(body, this.id).subscribe({
       next: () => {
+        this.spinner.hide();
         this.router.navigate([`/details/${this.id}`]);
         this.notifications.showSuccess('Car edited successfully!');
       },

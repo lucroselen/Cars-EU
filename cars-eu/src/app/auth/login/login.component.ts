@@ -8,6 +8,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NotificationsService } from 'src/app/core/notifications.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-login',
@@ -33,7 +34,8 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private router: Router,
-    private notifications: NotificationsService
+    private notifications: NotificationsService,
+    private spinner: NgxSpinnerService
   ) {}
 
   ngOnInit(): void {}
@@ -61,15 +63,19 @@ export class LoginComponent implements OnInit {
       this.notifications.showError('Password cannot contain white spaces!');
       return;
     }
+    this.spinner.show();
+
     this.authService.login$(this.loginFormGroup.value).subscribe({
       next: (e: any) => {
         localStorage.setItem('id', e.id);
         this.authService.authenticate().subscribe();
+        this.spinner.hide();
         this.router.navigate(['/all-cars']);
         this.notifications.showSuccess('Login successful!');
       },
       error: (err) => {
         //back-end validation
+        this.spinner.hide();
         this.notifications.showError(err.error.error);
       },
     });

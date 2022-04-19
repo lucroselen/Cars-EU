@@ -10,8 +10,8 @@
               alt="img"
             />
           </div>
-          <div *ngIf="!person; else elseBlock"><h3>LOADING...</h3></div>
-          <ng-template #elseBlock>
+          <div *ngIf="!person; else elseBlockOne"></div>
+          <ng-template #elseBlockOne>
             <div class="col-md-7">
               <strong class="h2">
                 {{ person.firstName }} {{ person.lastName }}
@@ -21,7 +21,7 @@
               </span>
 
               <hr />
-              <div *ngIf="person.favorites.length > 0; else elseBlock">
+              <div *ngIf="person.favorites.length > 0; else elseBlockTwo">
                 <div *ngFor="let car of person.favorites">
                   <strong>
                     <a [routerLink]="['../../details', car._id]">
@@ -32,7 +32,7 @@
                 </div>
               </div>
 
-              <ng-template #elseBlock
+              <ng-template #elseBlockTwo
                 ><p>
                   <strong>
                     <p class="h2">You don't have any favorite cars yet!</p>

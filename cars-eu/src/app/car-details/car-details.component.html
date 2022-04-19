@@ -1,6 +1,6 @@
 <div>
-  <div class="container" *ngIf="car; else elseBlock">
-    <div class="row">
+  <div class="container">
+    <div class="row" *ngIf="car">
       <div class="col-md-5">
         <div class="project-info-box mt-0">
           <h5>
@@ -144,5 +144,3 @@
     </div>
   </div>
 </div>
-
-<ng-template #elseBlock>LOADING...</ng-template>

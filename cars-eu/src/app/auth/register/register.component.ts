@@ -6,6 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { AuthService } from 'src/app/auth.service';
 import { IUser } from 'src/app/core/interfaces/user';
 import { NotificationsService } from 'src/app/core/notifications.service';
@@ -49,14 +50,14 @@ export class RegisterComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private authService: AuthService,
-    private notifications: NotificationsService
+    private notifications: NotificationsService,
+    private spinner: NgxSpinnerService
   ) {}
 
   ngOnInit(): void {}
   handleRegister(): void {
     const { firstName, lastName, email, password, rePassword } =
       this.registerFormGroup.value;
-
     //front-end validation
     if (
       this.registerFormGroup.get('email')?.hasError('required') ||
@@ -101,6 +102,7 @@ export class RegisterComponent implements OnInit {
       this.notifications.showError('Both passwords should be the same!');
       return;
     }
+    this.spinner.show();
 
     const body: IUser = {
       firstName,
@@ -113,11 +115,13 @@ export class RegisterComponent implements OnInit {
       next: (e: any) => {
         localStorage.setItem('id', e.id);
         this.authService.authenticate().subscribe();
+        this.spinner.hide();
         this.router.navigate(['/all-cars']);
         this.notifications.showSuccess('Registration successful!');
       },
       error: (err) => {
         //back-end validation
+        this.spinner.hide();
         this.notifications.showError(err.error.error);
       },
     });

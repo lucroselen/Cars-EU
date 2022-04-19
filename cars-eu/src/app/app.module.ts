@@ -1,4 +1,8 @@
-import { NgModule, APP_INITIALIZER } from '@angular/core';
+import {
+  NgModule,
+  APP_INITIALIZER,
+  CUSTOM_ELEMENTS_SCHEMA,
+} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
@@ -20,6 +24,7 @@ import { AuthService } from './auth.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Top10Component } from './top-10/top-10.component';
 import { TrimPipe } from './trim.pipe';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [
@@ -47,7 +52,9 @@ import { TrimPipe } from './trim.pipe';
     RouterModule,
     CoreModule.forRoot(),
     ReactiveFormsModule,
+    NgxSpinnerModule,
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
     {
       provide: APP_INITIALIZER,

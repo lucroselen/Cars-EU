@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { AuthService } from 'src/app/auth.service';
 import { NotificationsService } from '../notifications.service';
 
@@ -16,7 +17,8 @@ export class HeaderComponent implements OnInit {
   constructor(
     public authService: AuthService,
     private router: Router,
-    private notifications: NotificationsService
+    private notifications: NotificationsService,
+    private spinner: NgxSpinnerService
   ) {}
 
   ngOnInit(): void {
@@ -29,18 +31,21 @@ export class HeaderComponent implements OnInit {
     if (this.isLoggingOut) {
       return;
     }
+    this.spinner.show();
 
     this.isLoggingOut = true;
 
     this.authService.logout$().subscribe({
       complete: () => {
         this.isLoggingOut = false;
+        this.spinner.hide();
         this.router.navigate(['/user/login']);
         this.authService.handleLogout();
         localStorage.removeItem('id');
         this.notifications.showSuccess('Logout successful!');
       },
       error: () => {
+        this.spinner.hide();
         this.isLoggingOut = false;
       },
     });
