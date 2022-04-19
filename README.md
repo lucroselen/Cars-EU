@@ -3,6 +3,7 @@
 Student application for SoftUni's Angular course (Project Assignment).
 
 Back-end developed: NodeJS, Express, MongoDB (Mongoose)
+
 Front-end developed: Angular
 
 Идеята е уебсайт за коли тип "mobile.bg". Всеки регистриран потребител има право да добавя кола, да дава like/dislike (освен потребителя добавил колата), да коментира, както и да си ги добавя в любими (видими в профила). Създателят на записите има право да ги редактира или премахва. Всяка кола има рейтинг отразен от сумата лайкове и дислайкове.
