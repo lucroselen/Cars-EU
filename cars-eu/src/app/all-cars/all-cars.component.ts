@@ -19,12 +19,18 @@ export class AllCarsComponent implements OnInit {
   ngOnInit(): void {
     this.spinner.show();
     this.notifications.showInfo('All cars are being displayed!');
-    this.carService.allCars$().subscribe((e) => {
-      this.cars = e['cars'].map((e) => {
-        e.stars = this.carService.starsGenerator(e.rating);
-        return e;
-      });
-      this.spinner.hide();
+    this.carService.allCars$().subscribe({
+      next: (e) => {
+        this.cars = e['cars'].map((e) => {
+          e.stars = this.carService.starsGenerator(e.rating);
+          return e;
+        });
+        this.spinner.hide();
+      },
+      error: (err) => {
+        this.spinner.hide();
+        this.notifications.showError(err.error.error);
+      },
     });
   }
 }

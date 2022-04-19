@@ -19,12 +19,18 @@ export class Top10Component implements OnInit {
   ngOnInit(): void {
     this.spinner.show();
     this.notifications.showInfo('The top 10 cars are being displayed!');
-    this.carService.top10Cars$().subscribe((e) => {
-      this.cars = e['cars'].map((e) => {
-        e.stars = this.carService.starsGenerator(e.rating);
-        return e;
-      });
-      this.spinner.hide();
+    this.carService.top10Cars$().subscribe({
+      next: (e) => {
+        this.cars = e['cars'].map((e) => {
+          e.stars = this.carService.starsGenerator(e.rating);
+          return e;
+        });
+        this.spinner.hide();
+      },
+      error: (err) => {
+        this.notifications.showInfo(err.error.error);
+        this.spinner.hide();
+      },
     });
   }
 }
