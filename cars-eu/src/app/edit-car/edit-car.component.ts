@@ -73,6 +73,7 @@ export class EditCarComponent implements OnInit {
     this.carService.getOne$(this.id).subscribe({
       next: (e) => {
         if (!!e['error']) {
+          this.spinner.hide();
           this.router.navigate(['/404']);
           return;
         }

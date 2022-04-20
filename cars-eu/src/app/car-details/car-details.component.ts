@@ -47,6 +47,7 @@ export class CarDetailsComponent implements OnInit {
     this.carService.getOne$(this.id).subscribe({
       next: (e) => {
         if (!!e['error']) {
+          this.spinner.hide();
           this.router.navigate(['/404']);
           return;
         }
@@ -71,6 +72,7 @@ export class CarDetailsComponent implements OnInit {
     this.carService.delete$(this.id).subscribe({
       next: (e) => {
         if (!!e['error']) {
+          this.spinner.hide();
           this.router.navigate(['/404']);
           return;
         }
@@ -90,6 +92,7 @@ export class CarDetailsComponent implements OnInit {
     this.carService.voteUp$(this.id).subscribe({
       next: (e) => {
         if (!!e['error']) {
+          this.spinner.hide();
           this.router.navigate(['/404']);
           return;
         }
@@ -111,6 +114,7 @@ export class CarDetailsComponent implements OnInit {
     this.carService.voteDown$(this.id).subscribe({
       next: (e) => {
         if (!!e['error']) {
+          this.spinner.hide();
           this.router.navigate(['/404']);
           return;
         }
@@ -132,6 +136,7 @@ export class CarDetailsComponent implements OnInit {
     this.carService.favorite$(this.id).subscribe({
       next: (e) => {
         if (!!e['error']) {
+          this.spinner.hide();
           this.router.navigate(['/404']);
           return;
         }
