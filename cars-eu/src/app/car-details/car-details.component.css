@@ -119,3 +119,8 @@ img {
 .comment:not(:last-child) {
   margin-bottom: 1rem;
 }
+
+.commentTitle {
+  margin-bottom: 1.75rem;
+  margin-top: -1rem;
+}

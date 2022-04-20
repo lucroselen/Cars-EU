@@ -127,9 +127,10 @@
           </form>
         </div>
         <div
-          *ngIf="car['comments'].length > 0 && isLogged"
+          *ngIf="car['comments'].length > 0"
           class="project-info-box fix-margin"
         >
+          <h2 class="commentTitle">Comments:</h2>
           <p class="comment" *ngFor="let comment of car['comments']">
             <strong>{{ comment }}</strong>
           </p>
