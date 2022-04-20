@@ -34,5 +34,7 @@ password: 123456
 https://cars-eu.herokuapp.com
 
 Existing test user:
-test@abv.bg
+
+email: test@abv.bg
+
 password: 123123
