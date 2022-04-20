@@ -28,3 +28,11 @@ npm start - в папка cars-eu\server
 email: john@mail.com
 
 password: 123456
+
+# DEPLOYED to HEROKU
+
+https://cars-eu.herokuapp.com
+
+Existing test user:
+test@abv.bg
+password: 123123
