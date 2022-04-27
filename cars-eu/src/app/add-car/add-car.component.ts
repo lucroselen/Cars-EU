@@ -8,6 +8,7 @@ import {
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { CarService } from '../car.service';
+import { ICar } from '../core/interfaces/car';
 import { NotificationsService } from '../core/notifications.service';
 
 @Component({
@@ -149,7 +150,7 @@ export class AddCarComponent implements OnInit {
     }
     this.spinner.show();
 
-    const body: object = {
+    const body: ICar = {
       brand,
       model,
       imgUrl,

@@ -2,14 +2,15 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
+import { ICar } from './core/interfaces/car';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CarService {
   constructor(private http: HttpClient) {}
-  add$(car: object): Observable<object> {
-    return this.http.post<object>(`${environment.apiUrl}/add`, car, {
+  add$(car: ICar): Observable<object> {
+    return this.http.post<ICar>(`${environment.apiUrl}/add`, car, {
       withCredentials: true,
     });
   }
