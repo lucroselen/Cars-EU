@@ -161,6 +161,7 @@ export class CarDetailsComponent implements OnInit {
     ) {
       this.notifications.showInfo('Cannot post empty comments.');
       this.commentFormGroup.get('comment')?.setValue('');
+      this.spinner.hide();
       return;
     }
     this.carService.comment$(this.id, this.commentFormGroup.value).subscribe();
